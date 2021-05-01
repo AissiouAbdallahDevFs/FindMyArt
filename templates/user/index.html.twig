@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-5">Listes des utilisateurs inscrits</h1>
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>                
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
+                <th>Téléphone</th>
+                <th>Documents validés ?</th>
+                <th>Mail vérifié ?</th>
+                {# <th>Password</th>
+                <th>Roles</th> #}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>                
+                <td>{{ user.address }}</td>
+                <td>{{ user.postcode }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.DocValidated }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                {# <td>{{ user.password }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+                
+                <td class="d-flex m-1">
+                    <a href="{{ path('user_show', {'id': user.id}) }}"class="btn btn-primary m-1" role="button"><i class="far fa-eye"></i></a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}"class="btn btn-primary m-1" role="button"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}" class="btn btn-success mt-5 mb-5" role="button">Ajouter un utilisateur +</a>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShowRentingController!{% endblock %}
+
+{% block body %}
+
+<div class="show-renting container">
+
+    <h2>Détail de ta réservation nº {{ renting.id }}</h2>
+
+        <ul>
+            <li>Date de la commande : {{ renting.date ? renting.date|date('d-m-Y') : '' }}</li> 
+
+            {% if renting.statuts == "pending" %}
+                <li>En cours de préparation</li> 
+            {% elseif renting.statuts == "shipped" %}
+                <li>En cours de livraison</li> 
+            {% else %}
+                <li>Terminée</li> 
+            {% endif %}
+
+
+            {% for rentingDetail in renting.rentingDetails %}
+                {# {{ dump(rentingDetail) }} #}
+
+                <li><strong>Total de la commande : {{ rentingDetail.priceOption }} </strong></li>
+        </ul>   
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom de l'oeuvre</th>                    
+                    <th>Aperçu</th>
+                    <th>Nom de l'artiste</th>
+                    <th>Style</th>
+                    <th>Prix par mois</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for piece in rentingDetail.piece %}
+                    {# {{ dump(piece) }} #}
+                    <tr>
+                        <td>{{ piece.title }}</td>
+                        <td><img src="{{ findmyart_display_image(piece, 'imageFile') }}" alt="{{ piece.title }}" /></td>
+                        <td>{{ piece.artist }}</td>
+                        
+                        {% if piece.style == "Photography" %}
+                            <td>Photographie</td>
+                        {% elseif piece.style == "DigitalArt" %}
+                            <td>Art Digital</td>
+                        {% elseif piece.style == "ContemporaryArt" %}
+                            <td>Art Contemporain</td>
+                        {% else %}
+                            <td>Street Art</td>
+                        {% endif %}
+                        
+                        <td>{{ piece.price }} €</td>
+                    </tr>
+                {% endfor %}    
+
+            </tbody>
+        </table>
+        {% endfor %}
+
+        <div class="bouton">
+                <a href="{{path('user_account')}}"><i class="fas fa-arrow-alt-circle-left m-2"></i>Retour à l'espace perso</a>
+        </div>
+
+</div>
+{% endblock %}

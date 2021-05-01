@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Renting index{% endblock %}
+
+{% block body %}
+    <h1>Renting index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>User Id</th>
+                <th>User Name</th>
+                <th>Statuts</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for renting in rentings %}
+            <tr>
+                <td>{{ renting.id }}</td>
+                <td>{{ renting.date ? renting.date|date('d-m-Y') : '' }}</td>                
+                <td>{{ renting.user.id }}</td>
+                <td>{{ renting.user.firstname }}</td>
+                <td>{{ renting.statuts }}</td>
+                <td>
+                    <a href="{{ path('renting_show', {'id': renting.id}) }}" class="btn btn-primary" role="button"><i class="far fa-eye"></i></a>
+                    <a href="{{ path('renting_edit', {'id': renting.id}) }}" class="btn btn-primary" role="button"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('renting_new') }}" class="btn btn-success mb-5" role="button">Ajouter +</a>
+{% endblock %}

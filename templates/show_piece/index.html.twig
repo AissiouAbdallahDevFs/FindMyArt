@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ piece.title }} {% endblock %}
+
+{% block body %}
+
+    <section class="showpiece">
+
+        <img src="{{ findmyart_display_image(piece, 'imageFile') }}" alt="{{ piece.title }}" />
+        
+        <div class="description">
+            <h1>{{ piece.title }}</h1>
+            <h2>{{ piece.artist }}</h2>
+
+            <div>
+                <p>
+                    {{ piece.creationDate }} ·
+                    
+                    {% if piece.style == "Photography" %}
+                        Photographie
+                    {% elseif piece.style == "DigitalArt" %}
+                        Art Digital
+                    {% elseif piece.style == "ContemporaryArt" %}
+                        Art Contemporain
+                    {% else %}
+                        Street Art
+                    {% endif %}
+                </p>
+            </div>
+            <div>
+                <p>
+                    {{ piece.materialsTechnique }} · 
+                    Fonds d'oeuvres : {{ piece.owner.category }}
+                </p>
+            </div> 
+            <div> 
+                <p>
+                    {{ piece.size }}
+                </p>
+            </div>
+
+            <p>{{ piece.description }}</p>
+
+            <div class="availability-piece">
+                {% if piece.availability == 1 %}
+                    <p><i class="green-circle fas fa-circle"></i>Disponible</p>
+                {% else %}
+                    <p><i class="red-circle fas fa-circle"></i>Indisponible</p>
+                {% endif %}
+            </div>
+            
+            <div class="add-basket">
+                
+                {% if piece.availability == 1 %}
+                    <a href="{{path('add_basket',{id: piece.id})}}"> <i class="fas fa-plus-circle"></i></a>
+            
+                    <span class="ghost-message"> Ajouter à votre palette </span>
+
+                {% else %}
+                    
+                    <p>L'oeuvre n'est pas disponible pour le moment.</p>
+                {% endif %}
+
+            </div>
+
+            <div class="btn_wrap">
+                <span>Partager</span>
+                <div class="share-container">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>  
+    
+  
+
+
+
+{% endblock %}
